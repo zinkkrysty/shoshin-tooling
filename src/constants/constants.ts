@@ -1,9 +1,10 @@
+import { CharacterName } from "../types/Character";
 
 export const SIMULATOR_W = 1000
 export const SIMULATOR_H = 300
 
 export const bodyStateNumberToName = {
-    'jessica':{
+    [CharacterName.JESSICA]: {
         0: 'idle',
         10: 'slash',
         20: 'upswing',
@@ -32,7 +33,7 @@ export const bodyStateNumberToName = {
         //     const DASH_BACKWARD = 120;  // 5 frames
         // }
     },
-    'antoc': {
+    [CharacterName.ANTOC]: {
         0: 'idle',
         10: 'hori',
         20: 'vert',
@@ -60,8 +61,8 @@ export const bodyStateNumberToName = {
 
 }
 
-export const adjustmentForCharacter = (characterName: string, bodyStateName: string, bodyStateDir: string) => {
-    if (characterName == 'jessica') {
+export const adjustmentForCharacter = (characterName: CharacterName, bodyStateName: string, bodyStateDir: string) => {
+    if (characterName === CharacterName.JESSICA) {
 
         // calculate top adjustment
         const top = !(bodyStateName in ['dash_forward', 'dash_backward']) ? 8 : 0;
@@ -83,7 +84,7 @@ export const adjustmentForCharacter = (characterName: string, bodyStateName: str
 
         return {'top': top, 'left':left};
     }
-    else if (characterName == 'antoc') {
+    else if (characterName === CharacterName.ANTOC) {
 
         const top = 13;
 

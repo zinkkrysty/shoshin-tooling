@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react'
 import styles from "../../styles/Character.module.css";
 import testJsonStr from '../json/test_engine.json';
 import { SIMULATOR_H, SIMULATOR_W, bodyStateNumberToName, adjustmentForCharacter } from '../constants/constants';
-import { TestJson, Frame, Rectangle } from '../types/Frame';
+import { TestJson, Frame, Rectangle, Direction } from '../types/Frame';
+import { generateImagePath } from '../helpers/sprite';
+import { CharacterName } from '../types/Character';
 
 interface CharacterProps {
     agentIndex: number;
-    characterName: string;
+    characterName: CharacterName;
     agentFrame: Frame;
 }
 
@@ -25,7 +27,7 @@ export default function Character( {agentIndex, characterName, agentFrame}: Char
 
     // Calculate path to the correct sprite
     const bodyStateName = bodyStateNumberToName [characterName][bodyState]
-    const direction = (bodyStateDir == 1) ? 'right' : 'left'
+    const direction = (bodyStateDir == 1) ? Direction.RIGHT : Direction.LEFT
     console.log(characterName, 'direction', direction)
 
     // Calculate character's left and top for rendering
@@ -46,7 +48,7 @@ export default function Character( {agentIndex, characterName, agentFrame}: Char
                     // border: 'none',
                     position: 'absolute', left: left, top: top,
                     zIndex: 0,
-                    background: `url("./images/${characterName}/${bodyStateName}/${direction}/frame_${bodyStateCounter}.png") no-repeat left bottom`,
+                    background: `url("${generateImagePath(characterName, bodyStateName, direction, bodyStateCounter)}") no-repeat left bottom`,
                     // backgroundRepeat: 'no-repeat',
                     // backgroundSize: 'auto',
                     // backgroundPosition: 'left bottom',

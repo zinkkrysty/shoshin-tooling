@@ -48,6 +48,11 @@ export interface TestJson {
     }
 }
 
+export enum Direction {
+    LEFT = "left",
+    RIGHT = "right",
+}
+
 // From Cairo:
 // struct Frame {
 //     mental_state: felt,

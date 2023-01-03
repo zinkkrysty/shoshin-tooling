@@ -7,6 +7,7 @@ import MidScreenControl from '../src/components/MidScreenControl';
 import LoadTestJson from '../src/components/LoadTestJson';
 import Simulator from '../src/components/Simulator';
 import { TestJson, Frame } from '../src/types/Frame';
+import ImagePreloader from '../src/components/ImagePreloader';
 
 const theme = createTheme({
     typography: {
@@ -150,6 +151,7 @@ export default function Home() {
                     {
                         !testJson ? <></> :
                         <>
+                            <ImagePreloader onComplete={() => {console.log('completed images')}} />
                             <Simulator
                                 characterType0={testJson.agent_0.type}
                                 characterType1={testJson.agent_1.type}

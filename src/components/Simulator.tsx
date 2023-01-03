@@ -1,11 +1,12 @@
-import {useAccount, useConnectors} from '@starknet-react/core'
-import { useEffect, useState } from 'react'
-import Character from './Character';
-import Hitbox from './Hitbox';
-import Debug from './Debug';
-import { SIMULATOR_H, SIMULATOR_W } from '../constants/constants';
-import testJsonStr from '../json/test_engine.json';
-import { TestJson, Frame } from '../types/Frame';
+import { useAccount, useConnectors } from "@starknet-react/core";
+import { useEffect, useState } from "react";
+import Character from "./Character";
+import Hitbox from "./Hitbox";
+import Debug from "./Debug";
+import { SIMULATOR_H, SIMULATOR_W } from "../constants/constants";
+import testJsonStr from "../json/test_engine.json";
+import { TestJson, Frame } from "../types/Frame";
+import { CharacterName } from "../types/Character";
 
 interface SimulatorProps {
     characterType0: number;
@@ -15,12 +16,13 @@ interface SimulatorProps {
     showDebug: boolean;
 }
 
-export default function Simulator( {
-    characterType0, characterType1,
-    agentFrame0, agentFrame1,
+export default function Simulator({
+    characterType0,
+    characterType1,
+    agentFrame0,
+    agentFrame1,
     showDebug = true,
-}: SimulatorProps ) {
-
+}: SimulatorProps) {
     // const [recordJson, setRecordJson] = useState<TestJson>();
     // useEffect(() => {
     //     const record = JSON.parse(testJsonStr);
@@ -29,39 +31,66 @@ export default function Simulator( {
     // }, []);
     // if (!recordJson) return <></>
 
-    const characterName0 = characterType0 == 0 ? 'jessica' : 'antoc'
-    const characterName1 = characterType1 == 0 ? 'jessica' : 'antoc'
+    const characterName0 =
+        characterType0 == 0 ? CharacterName.JESSICA : CharacterName.ANTOC;
+    const characterName1 =
+        characterType1 == 0 ? CharacterName.JESSICA : CharacterName.ANTOC;
 
     return (
-        <div style={{
-            display:'flex', flexDirection:'row',
-            width:SIMULATOR_W, height:SIMULATOR_H,
-            borderBottom:'1px solid #333333',
-            position:'relative',
-            marginBottom: '20px',
-        }}>
-            <Character agentIndex={0} characterName={characterName0} agentFrame={agentFrame0} />
-            <Character agentIndex={1} characterName={characterName1} agentFrame={agentFrame1} />
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "row",
+                width: SIMULATOR_W,
+                height: SIMULATOR_H,
+                borderBottom: "1px solid #333333",
+                position: "relative",
+                marginBottom: "20px",
+            }}
+        >
+            <Character
+                agentIndex={0}
+                characterName={"jessica"}
+                agentFrame={agentFrame_0}
+            />
+            <Character
+                agentIndex={1}
+                characterName={"antoc"}
+                agentFrame={agentFrame_1}
+            />
 
+            <Hitbox
+                show={showDebug}
+                agentFrame={agentFrame1}
+                hitboxType={"body"}
+            />
+            <Hitbox
+                show={showDebug}
+                agentFrame={agentFrame1}
+                hitboxType={"action"}
+            />
 
-            <Hitbox show={showDebug} agentFrame={agentFrame0} hitboxType={'body'} />
-            <Hitbox show={showDebug} agentFrame={agentFrame0} hitboxType={'action'} />
-
-            <Hitbox show={showDebug} agentFrame={agentFrame1} hitboxType={'body'} />
-            <Hitbox show={showDebug} agentFrame={agentFrame1} hitboxType={'action'} />
-
-            <Debug show={showDebug} agentIndex={0} agentFrame={agentFrame0} characterName={characterName0} />
-            <Debug show={showDebug} agentIndex={1} agentFrame={agentFrame1} characterName={characterName1} />
+            <Debug
+                show={showDebug}
+                agentIndex={0}
+                agentFrame={agentFrame0}
+                characterName={characterName0}
+            />
+            <Debug
+                show={showDebug}
+                agentIndex={1}
+                agentFrame={agentFrame1}
+                characterName={characterName1}
+            />
         </div>
-    )
+    );
 }
 
 // reference: https://stackoverflow.com/a/66228871
-function feltLiteralToString (felt: string) {
+function feltLiteralToString(felt: string) {
+    const tester = felt.split("");
 
-    const tester = felt.split('');
-
-    let currentChar = '';
+    let currentChar = "";
     let result = "";
     const minVal = 25;
     const maxval = 255;
@@ -70,13 +99,13 @@ function feltLiteralToString (felt: string) {
         currentChar += tester[i];
         if (parseInt(currentChar) > minVal) {
             // console.log(currentChar, String.fromCharCode(currentChar));
-            result += String.fromCharCode( parseInt(currentChar) );
+            result += String.fromCharCode(parseInt(currentChar));
             currentChar = "";
         }
         if (parseInt(currentChar) > maxval) {
-            currentChar = '';
+            currentChar = "";
         }
     }
 
-    return result
+    return result;
 }
