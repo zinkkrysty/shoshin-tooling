@@ -1,11 +1,18 @@
 import { Box, LinearProgress } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import { allImages } from "../helpers/sprite";
+import { TestJson } from "../types/Frame";
 
-const ImagePreloader = ({ onComplete }: { onComplete: () => void }) => {
+const ImagePreloader = ({
+    json,
+    onComplete,
+}: {
+    json: TestJson;
+    onComplete: () => void;
+}) => {
     const [loaded, setLoaded] = useState<number>(0);
     const images = useMemo(() => {
-        return allImages();
+        return allImages(json);
     }, []);
 
     useEffect(() => {

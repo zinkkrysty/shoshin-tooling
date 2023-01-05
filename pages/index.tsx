@@ -151,7 +151,13 @@ export default function Home() {
                     {
                         !testJson ? <></> :
                         <>
-                            <ImagePreloader onComplete={() => {console.log('completed images')}} />
+                            <ImagePreloader
+                                key={JSON.stringify(testJson)}
+                                json={testJson}
+                                onComplete={() => {
+                                    console.log("completed images");
+                                }}
+                            />
                             <Simulator
                                 characterType0={testJson.agent_0.type}
                                 characterType1={testJson.agent_1.type}
